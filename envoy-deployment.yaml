@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-envoy
+  labels:
+    app: myapp-envoy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp-envoy
+  template:
+    metadata:
+      labels:
+        app: myapp-envoy
+    spec:
+      containers:
+      - name: myapp-envoy
+        image: "ic3blueprint.azurecr.io/envoy/envoy"
+        imagePullPolicy: Always
+        ports:
+#@ for i in range(0,200):
+#@ port = 10000+i
+        - containerPort: #@ port
+#@ end
+        - name: envoy-admin
+          containerPort: 9902
